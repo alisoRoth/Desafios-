@@ -1,0 +1,69 @@
+public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random random = new Random();
+
+        int[][] mar = new int[7][7];
+        boolean[][] jogadas = new boolean[7][7];
+        int naviosRestantes = 3;
+
+        int navios = 0;
+        while (navios < 3) {
+            int linha = random.nextInt(7);
+            int coluna = random.nextInt(7);
+            if (mar[linha][coluna] == 0) {
+                mar[linha][coluna] = 1;
+                navios++;
+            }
+        }
+
+        System.out.println("Digite coordenadas (linha e coluna de 0 a 6).\n");
+
+        while (naviosRestantes > 0) {
+
+            System.out.println("Tabuleiro:");
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 7; j++) {
+                    if (jogadas[i][j]) {
+                        if (mar[i][j] == 1) {
+                            System.out.print(" X ");
+                        } else {
+                            System.out.print(" ~ ");
+                        }
+                    } else {
+                        System.out.print(" ? ");
+                    }
+                }
+                System.out.println();
+            }
+
+            System.out.print("\nDigite a linha (0-6): ");
+            int linha = sc.nextInt();
+            System.out.print("Digite a coluna (0-6): ");
+            int coluna = sc.nextInt();
+
+            if (linha < 0 || linha > 6 || coluna < 0 || coluna > 6) {
+                System.out.println("Posição inválida! Digite entre 0 e 6.");
+                continue;
+            }
+
+            if (jogadas[linha][coluna]) {
+                System.out.println("Você já atirou nessa posição!");
+                continue;
+            }
+
+            jogadas[linha][coluna] = true;
+
+            if (mar[linha][coluna] == 1) {
+                System.out.println("Acertou um navio!");
+                naviosRestantes--;
+            } else {
+                System.out.println("Acertou a água...");
+            }
+
+            System.out.println("Navios restantes: " + naviosRestantes + "\n");
+        }
+
+        System.out.println("Parabéns! Você afundou todos os navios!");
+        sc.close();
+    }
+}
